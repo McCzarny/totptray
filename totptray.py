@@ -10,7 +10,7 @@ import pystray
 import pyotp
 from PIL import Image, ImageDraw
 
-def create_icon():
+def _create_icon():
     """
     Creates a T-shaped icon.
 
@@ -37,30 +37,29 @@ def create_icon():
 
     return image
 
-def copy_code(key="none"):
+def _copy_code(key="none"):
     """
     Copies a TOTP generated code for the given key to the clipboard.
     :param key: For for which a TOTP code should be generated.
     """
     code = pyotp.TOTP(key).now()
-    print(key + ":" + code)
     pyperclip.copy(code)
 
-def create_menu(keys):
+def _create_menu(keys):
     """
     Creates a list of menu items for each passed key.
-    :param keys: A list of labeled keys in the format: "label=key".
+    :param keys: A list of lists with 2 items each. The first item is a label, the second a key.
     :returns: A list of menu items for each passed key.
     """
-    return [pystray.MenuItem(x[:x.index('=')], lambda _: copy_code(x[x.index('=')+1:])) for x in keys]
+    return [pystray.MenuItem(key[0], lambda _: _copy_code(key[1])) for key in keys]
 
 def main():
     """
     Creates a tray icon with a menu that allows to copy OTP generated codes.
     """
     assert len(sys.argv) > 1
-    assert all("=" in item for item in sys.argv[1:])
-    icon = pystray.Icon('TOTP', icon=create_icon(), menu=create_menu(sys.argv[1:]))
+    assert all(item.count('=') == 1 for item in sys.argv[1:])
+    icon = pystray.Icon('totptray', icon=_create_icon(), menu=_create_menu([x.split('=') for x in sys.argv[1:]]))
     icon.run()
 
 if __name__ == '__main__':
