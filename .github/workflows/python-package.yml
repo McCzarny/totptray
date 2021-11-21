@@ -13,6 +13,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      DISPLAY: ':99'
     strategy:
       fail-fast: false
       matrix:
@@ -35,6 +37,9 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Setup headless environment
+      run: |
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     - name: Test with pytest
       run: |
         pytest
