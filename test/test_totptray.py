@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import totptray
+from totptray import totptray
 import unittest
 import pyperclip
 
