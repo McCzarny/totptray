@@ -37,7 +37,7 @@ def _create_icon():
 
     return image
 
-def _copy_code(key="none"):
+def _copy_code(key):
     """
     Copies a TOTP generated code for the given key to the clipboard.
     :param key: For for which a TOTP code should be generated.
@@ -51,6 +51,7 @@ def _create_menu(keys):
     :param keys: A list of lists with 2 items each. The first item is a label, the second a key.
     :returns: A list of menu items for each passed key.
     """
+    assert all(len(key) == 2 for key in keys)
     return [pystray.MenuItem(key[0], lambda _: _copy_code(key[1])) for key in keys]
 
 def main():
