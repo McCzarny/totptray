@@ -41,6 +41,17 @@ class Test(unittest.TestCase):
         for idx, item in enumerate(menu):
             self.assertEqual(item.text, "label" + str(idx))
 
+    def test_create_menu_multiple_different_codes(self):
+        menu = totptray._create_menu((("label0","AAAAAAAAAAAAAAAA"),("label1","BBBBBBBBBBBBBBBB"),("label2","CCCCCCCCCCCCCCCC")))
+        self.assertEqual(len(menu), 3)
+        codes=set()
+
+        for idx, item in enumerate(menu):
+            self.assertEqual(item.text, "label" + str(idx))
+            item._action(None)
+            codes.add(pyperclip.paste())
+        self.assertEqual(len(codes), 3)
+
     def test_create_menu_incorrect(self):
         self.assertRaises(AssertionError, totptray._create_menu, (("label=key",),))
 

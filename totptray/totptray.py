@@ -45,6 +45,14 @@ def _copy_code(key):
     code = pyotp.TOTP(key).now()
     pyperclip.copy(code)
 
+def _generate_lambda(key):
+    """
+    Returns a lambda for copying a code for a given key.
+    :param key: The key for which the lambda should be generated.
+    :returns: Lambda for copying a code for a given key.
+    """
+    return lambda: _copy_code(key)
+
 def _create_menu(keys):
     """
     Creates a list of menu items for each passed key.
@@ -52,7 +60,7 @@ def _create_menu(keys):
     :returns: A list of menu items for each passed key.
     """
     assert all(len(key) == 2 for key in keys)
-    return [pystray.MenuItem(key[0], lambda _: _copy_code(key[1])) for key in keys]
+    return [pystray.MenuItem(key[0], _generate_lambda(key[1])) for key in keys]
 
 def main():
     """
