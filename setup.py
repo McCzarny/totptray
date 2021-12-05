@@ -1,4 +1,5 @@
 import pathlib
+import totptray
 from setuptools import setup
 
 # The directory containing this file
@@ -10,7 +11,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="totptray",
-    version="1.1.1",
+    version=totptray.__version__,
     description="A simple tray icon tool with a TOTP implementation.",
     long_description=README,
     long_description_content_type="text/markdown",
