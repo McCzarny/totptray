@@ -10,6 +10,8 @@ import pystray
 import pyotp
 from PIL import Image, ImageDraw
 
+from . import __version__
+
 def _create_icon():
     """
     Creates a T-shaped icon.
@@ -60,7 +62,12 @@ def _create_menu(keys):
     :returns: A list of menu items for each passed key.
     """
     assert all(len(key) == 2 for key in keys)
-    return [pystray.MenuItem(key[0], _generate_lambda(key[1])) for key in keys]
+    menu = [pystray.MenuItem(key[0], _generate_lambda(key[1])) for key in keys]
+    
+    menu.append(pystray.Menu.SEPARATOR)
+    menu.append(pystray.MenuItem(f"version: {__version__}", lambda: None, enabled=False ))
+    menu.append(pystray.MenuItem("Exit", lambda icon: icon.stop()))
+    return menu
 
 def main():
     """
