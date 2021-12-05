@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Tray icon tool with a TOTP implementation.
 Usage:
