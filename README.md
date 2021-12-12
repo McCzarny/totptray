@@ -3,6 +3,7 @@ A simple tray icon tool with a TOTP implementation. Creates a tray icon with a m
 
 [![Python package](https://github.com/McCzarny/totptray/actions/workflows/python-package.yml/badge.svg)](https://github.com/McCzarny/totptray/actions/workflows/python-package.yml)
 
+[![Usage](/assets/usage.gif?raw=true)
 ## Usage
 The tool expects one or more pairs in this format: `name=key`, e.g.:
 
