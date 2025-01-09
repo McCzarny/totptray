@@ -1,0 +1,20 @@
+name: Build conda package
+
+on:
+  push:
+    branches: [ master, conda-ci ]
+  pull_request:
+    branches: [ master, conda-ci ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: McCzarny/build-conda-action@main
+      id: build-conda
+      with:
+        recipe_path: .
+    - name: Print conda PACKAGE_PATH
+      run: |
+        echo "${{ steps.build-conda.outputs.package-filepath }}"
